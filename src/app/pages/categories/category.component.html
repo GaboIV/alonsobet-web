@@ -1,0 +1,225 @@
+<div class="row gy-5 gx-xl-8">
+  <div class="col-xxl-4">
+    <div class="card card-xxl-stretch mb-xl-3">
+      <!-- begin::Header -->
+      <div class="card-header border-0">
+        <h3 class="card-title fw-bolder text-dark">Ligas</h3>
+        <div class="card-toolbar">
+          <!-- begin::Menu -->
+          <button
+            type="button"
+            class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+            data-kt-menu-trigger="click"
+            data-kt-menu-placement="bottom-end"
+            data-kt-menu-flip="top-end"
+          >
+            <span
+              [inlineSVG]="'./assets/media/icons/duotune/general/gen024.svg'"
+              class="svg-icon svg-icon-2"
+            ></span>
+          </button>
+          <app-dropdown-menu1></app-dropdown-menu1>
+          <!-- end::Menu -->
+        </div>
+      </div>
+      <!-- end::Header -->
+      <!-- begin::Body -->
+      <div class="card-body pt-2">
+        <!-- begin::Item -->
+        <div
+          class="d-flex align-items-center mb-8"
+          *ngFor="let league of leagues"
+        >
+          <!-- begin::Bullet -->
+          <span class="bullet bullet-vertical h-40px bg-success"></span>
+          <!-- end::Bullet -->
+          <!-- begin::Checkbox -->
+          <div class="form-check form-check-custom form-check-solid mx-5">
+            <input
+              (click)="toggleLeagueSelected(league, $event)"
+              class="form-check-input"
+              type="checkbox"
+              [(ngModel)]="league.checked"
+              [ngModelOptions]="{ standalone: false }"
+              name="checked + {{ league.id }}"
+              id="checked + {{ league.id }}"
+            />
+          </div>
+          <!-- end::Checkbox -->
+          <!-- begin::Description -->
+          <div class="flex-grow-1">
+            <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">
+              {{ league.name }}
+            </a>
+            <span class="text-muted fw-bold d-block"
+              >{{ league.country.name }}
+              <img [src]="league.country.image" alt=""
+            /></span>
+          </div>
+          <!-- end::Description -->
+          <span class="badge badge-light-success fs-8 fw-bolder">{{
+            league.games_count
+          }}</span>
+        </div>
+        <!-- end:Item -->
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+  <div class="col-xl-8">
+    <div class="card card-xxl-stretch mb-5 mb-xl-8">
+      <ng-container *ngFor="let league of leaguesSelecteds">
+        <!-- begin::Header -->
+        <div class="card-header border-0 pt-5">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bolder fs-3 mb-1">{{
+              league.name
+            }}</span>
+            <span class="text-muted mt-1 fw-bold fs-7"
+              >{{ league.games_count - 1 }} partidos</span
+            >
+          </h3>
+          <div
+            class="card-toolbar"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            data-bs-trigger="hover"
+            title="Click to add a user"
+          >
+            <a href="#" class="btn btn-sm btn-light-primary">
+              <i class="fa-solid fa-heart-circle-plus pe-2"></i>
+              Agregar a ligas favoritas
+            </a>
+          </div>
+        </div>
+        <!-- end::Header -->
+        <!-- begin::Body -->
+        <div class="card-body py-3">
+          <!-- begin::Table container -->
+          <div class="table-responsive">
+            <!-- begin::Table -->
+            <table
+              class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+            >
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder text-muted">
+                  <th class="min-w-150px">Equipo 1</th>
+                  <th class="min-w-140px" style="text-align: right">
+                    Equipo 2
+                  </th>
+                  <th class="min-w-120px" style="text-align: center">Inicio</th>
+                  <th class="min-w-100px text-center">Cuotas</th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody>
+                <tr *ngFor="let game of league.games">
+                  <td>
+                    <div style="position: relative">
+                      <div
+                        class="symbol symbol-45px me-5"
+                        style="position: absolute; left: 0px; top: 0px"
+                      >
+                        <span class="symbol-label"
+                          ><img
+                            [src]="game.teams[0].image_url"
+                            alt=""
+                            class="h-50 align-self-center"
+                        /></span>
+                        <!-- <img [src]="game.teams[0].image_url" alt="" /> -->
+                      </div>
+                      <div style="padding-left: 50px">
+                        <a
+                          href="#"
+                          class="text-dark fw-bolder text-hover-primary fs-6"
+                        >
+                          {{ game.teams[0].name }}
+                        </a>
+                        <span
+                          class="text-muted fw-bold text-muted d-block fs-7"
+                        >
+                          Alguna descripción
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="" style="position: relative">
+                      <div
+                        class=""
+                        style="padding-right: 50px; text-align: right"
+                      >
+                        <span
+                          class="text-dark fw-bolder text-hover-primary fs-6"
+                          style="text-align: right"
+                        >
+                          {{ game.teams[1].name }}
+                        </span>
+                        <span
+                          class="text-muted fw-bold text-muted d-block fs-7"
+                          style="text-align: right"
+                        >
+                          Alguna descripción
+                        </span>
+                      </div>
+                      <div
+                        class="symbol symbol-45px"
+                        style="position: absolute; right: 0px; top: 0px"
+                      >
+                        <span class="symbol-label"
+                          ><img
+                            [src]="game.teams[1].image_url"
+                            alt=""
+                            class="h-50 align-self-center"
+                        /></span>
+                        <!-- <img [src]="game.teams[1].image_url" alt="" /> -->
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="">
+                      <span
+                        class="text-muted fw-bold text-muted d-block fs-7"
+                        style="text-align: center"
+                      >
+                        {{ game.start | date: "d MMM" }}
+                      </span>
+                      <div
+                        class="text-dark fw-bolder text-hover-primary fs-6"
+                        style="text-align: center"
+                      >
+                        {{ game.start | date: "shortTime" }}
+                      </div>
+                    </div>
+                  </td>
+                  <td style="text-align: center">
+                    <div>
+                      <ng-container
+                        *ngFor="let competitor of game.competitors[0].data"
+                      >
+                        <span
+                          class="btn btn-sm btn-light btn-color-muted btn-active-light-danger px-4 py-2"
+                          style="text-align: center; margin-right: 0.25rem"
+                        >
+                          <span>{{ competitor.caption }}</span
+                          ><br />
+                          {{ competitor.quoteFloatValue | number: "1.2-2" }}
+                        </span>
+                      </ng-container>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+            <!-- end::Table -->
+          </div>
+          <!-- end::Table container -->
+        </div>
+        <!-- begin::Body -->
+      </ng-container>
+    </div>
+  </div>
+</div>
